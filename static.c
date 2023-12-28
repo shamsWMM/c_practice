@@ -11,7 +11,7 @@ void g(void)
 {
     // declaration and initialization done separately
 	static int x;
-    x = 0;
+    	x = 0;
 	printf("Value of x is %d\n",x);
 	x++;
 }
