@@ -13,7 +13,7 @@ int main()
 {
     clock_t tic, toc, tec;
     int variable_len;
-    for(variable_len=10000;variable_len<20000;variable_len+=1000)
+    for(variable_len=60000;variable_len<70000;variable_len+=1000)
     {
     // generate array to be sorted
     int numbers[variable_len];
@@ -66,7 +66,7 @@ void insert(int i, int *nums, int len)
         if(i>*nums) //number to be inserted is larger than first number
         {
             *(nums-1)=*nums;
-            r_insert(i,nums+1,len-1,nums); //use insert on the number and the rest of the array
+            insert(i,nums+1,len-1); //use insert on the number and the rest of the array
         }
         else *(nums-1) = i; //number to be inserted is smaller than first number in the array
     }
