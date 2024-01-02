@@ -34,8 +34,13 @@ int main()
 int *sort(int *nums, int len)
 // assume len is at least 1
 {
-    if(len==1) return(nums);
-    insert(*nums, sort(nums+1, len-1), len-1, nums);
+    if(len==1) return(nums); //array contains only one integer
+    insert(
+        *nums, //separate the first number from the rest and use it in insert()
+        sort(nums+1, len-1), //use the result of the recursion on the rest in insert()
+        len-1,
+        nums
+        );
     return nums;
 }
 void insert(int i, int *nums, int len, int *ptr)
@@ -43,12 +48,12 @@ void insert(int i, int *nums, int len, int *ptr)
     if(len==0)*ptr = i;
     else
     {
-        if(i>*nums)
+        if(i>*nums) //number to be inserted is larger than first number
         {
             *ptr=*nums;
-            r_insert(i,nums+1,len-1,ptr+1);
+            r_insert(i,nums+1,len-1,ptr+1); //use insert on the number and the rest of the array
         }
-        else *ptr = i;
+        else *ptr = i; //number to be inserted is smaller than first number in the array
     }
 }
 //with malloc
@@ -72,7 +77,7 @@ void r_insert(int i, int *nums, int len, int *res)
         else 
         {
             *res = i;
-            r_insert(*nums,nums+1,len-1,res+1);
+            r_insert(*nums,nums+1,len-1,res+1); // sets the values in the allocated space
         }
     }
 }
