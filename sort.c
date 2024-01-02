@@ -5,30 +5,45 @@
 void bsort(int *nums, int len);
 int *sort(int *nums, int len); // modifies original array
 int *render_sorted(int *nums, int len); // does not modify original array
-void insert(int i, int *nums, int len, int *ptr);
+void insert(int i, int *nums, int len);
 void r_insert(int i, int *nums, int len, int *ptr);
 void display(int *nums, int len);
 
 int main()
 {
+    clock_t tic, toc, tec;
+    int variable_len;
+    for(variable_len=10000;variable_len<20000;variable_len+=1000)
+    {
     // generate array to be sorted
-    int numbers[10];
+    int numbers[variable_len];
+    int nombres[variable_len];
+
 	srand((unsigned)time(NULL)); 
     int i;
-	for(i=0;i<LEN;i++) numbers[i] = rand() % 100 + 1; 
+	for(i=0;i<variable_len;i++)
+    {
+        int j = rand() % 100 + 1;
+        numbers[i] = j;
+        nombres[i] = j;
+    }  
     //display array
-    display(numbers, LEN);
+    //display(numbers, variable_len);
     
-    int *nums; // for the result of render_sorted()
-    nums = render_sorted(numbers,LEN);
-    display(nums,LEN);
+    //int *nums; // for the result of render_sorted()
+    //nums = render_sorted(numbers,LEN);
+    //display(nums,LEN);
+    //display(numbers, variable_len); //dsiplay original array to show it has not changed
+    
+    tic = clock();
+    sort(numbers,variable_len); //sort original array
+    toc = clock();
+    bsort(nombres,variable_len);
+    tec = clock();
+    printf("%d - sort: %f seconds\t bsort: %f\n", variable_len, (double)(toc - tic) / CLOCKS_PER_SEC, (double)(tec - toc) / CLOCKS_PER_SEC);
+    }
+    return(0);
 
-    display(numbers, LEN); //dsiplay original array to show it has not changed
-
-//    bsort(numbers,LEN);
-    sort(numbers,LEN); //sort original array
-    display(numbers,LEN); //display original array  
-	return(0);
 }
 
 int *sort(int *nums, int len)
@@ -38,22 +53,22 @@ int *sort(int *nums, int len)
     insert(
         *nums, //separate the first number from the rest and use it in insert()
         sort(nums+1, len-1), //use the result of the recursion on the rest in insert()
-        len-1,
-        nums
+        len-1        
         );
     return nums;
 }
-void insert(int i, int *nums, int len, int *ptr)
+
+void insert(int i, int *nums, int len)
 { // assumes list is already sorted
-    if(len==0)*ptr = i;
+    if(len==0)*(nums-1) = i;
     else
     {
         if(i>*nums) //number to be inserted is larger than first number
         {
-            *ptr=*nums;
-            r_insert(i,nums+1,len-1,ptr+1); //use insert on the number and the rest of the array
+            *(nums-1)=*nums;
+            r_insert(i,nums+1,len-1,nums); //use insert on the number and the rest of the array
         }
-        else *ptr = i; //number to be inserted is smaller than first number in the array
+        else *(nums-1) = i; //number to be inserted is smaller than first number in the array
     }
 }
 //with malloc
