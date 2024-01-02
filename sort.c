@@ -6,7 +6,7 @@ void bsort(int *nums, int len);
 int *sort(int *nums, int len); // modifies original array
 int *render_sorted(int *nums, int len); // does not modify original array
 void insert(int i, int *nums, int len, int *ptr);
-void insert_r(int i, int *nums, int len, int *ptr);
+void r_insert(int i, int *nums, int len, int *ptr);
 void display(int *nums, int len);
 
 int main()
@@ -46,7 +46,7 @@ void insert(int i, int *nums, int len, int *ptr)
         if(i>*nums)
         {
             *ptr=*nums;
-            insert_r(i,nums+1,len-1,ptr+1);
+            r_insert(i,nums+1,len-1,ptr+1);
         }
         else *ptr = i;
     }
@@ -56,10 +56,10 @@ int *render_sorted(int *nums, int len)
 {
     int *res = (int *)malloc(len*sizeof(int));
     if(len==1) *res=*nums;
-    else insert_r(*nums, render_sorted(nums+1, len-1), len-1, res);
+    else r_insert(*nums, render_sorted(nums+1, len-1), len-1, res);
     return res;
 }
-void insert_r(int i, int *nums, int len, int *res)
+void r_insert(int i, int *nums, int len, int *res)
 { // assumes list is already sorted
     if(len==0)*res = i;
     else
@@ -67,12 +67,12 @@ void insert_r(int i, int *nums, int len, int *res)
         if(i>*nums)
         {
             *res=*nums;
-            insert_r(i,nums+1,len-1,res+1);
+            r_insert(i,nums+1,len-1,res+1);
         }
         else 
         {
             *res = i;
-            insert_r(*nums,nums+1,len-1,res+1);
+            r_insert(*nums,nums+1,len-1,res+1);
         }
     }
 }
