@@ -3,7 +3,7 @@
 #include <time.h>
 #define LEN 10
 void bsort(int *nums, int len);
-int *sort(int *nums, int len); // modifies original array
+void sort(int *nums, int len); // modifies original array
 int *render_sorted(int *nums, int len); // does not modify original array
 void insert(int i, int *nums, int len);
 void r_insert(int i, int *nums, int len, int *ptr);
@@ -49,16 +49,10 @@ int main()
 
 }
 
-int *sort(int *nums, int len)
+void sort(int *nums, int len)
 // assume len is at least 1
 {
-    if(len==1) return(nums); //array contains only one integer
-    insert(
-        *nums, //separate the first number from the rest and use it in insert()
-        sort(nums+1, len-1), //use the result of the recursion on the rest in insert()
-        len-1        
-        );
-    return nums;
+    if(len)insert(*nums, nums+1, len-1);
 }
 
 void insert(int i, int *nums, int len)
@@ -66,6 +60,7 @@ void insert(int i, int *nums, int len)
     if(len==0)*(nums-1) = i;
     else
     {
+        sort(nums, len);
         if(i>*nums) //number to be inserted is larger than first number
         {
             *(nums-1)=*nums;
