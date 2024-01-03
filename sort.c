@@ -13,13 +13,14 @@ int main()
 {
     clock_t tic, toc, tec;
     int variable_len;
-    for(variable_len=60000;variable_len<70000;variable_len+=1000)
+    srand((unsigned)time(NULL)); 
+
+    for(variable_len=1;variable_len<7;variable_len++)
     {
     // generate array to be sorted
     int numbers[variable_len];
     int nombres[variable_len];
 
-	srand((unsigned)time(NULL)); 
     int i;
 	for(i=0;i<variable_len;i++)
     {
@@ -28,19 +29,21 @@ int main()
         nombres[i] = j;
     }  
     //display array
-    //display(numbers, variable_len);
+    display(numbers, variable_len);
     
     //int *nums; // for the result of render_sorted()
     //nums = render_sorted(numbers,LEN);
     //display(nums,LEN);
     //display(numbers, variable_len); //dsiplay original array to show it has not changed
     
-    tic = clock();
+    //tic = clock();
     sort(numbers,variable_len); //sort original array
-    toc = clock();
+    //toc = clock();
     bsort(nombres,variable_len);
-    tec = clock();
-    printf("%d - sort: %f seconds\t bsort: %f\n", variable_len, (double)(toc - tic) / CLOCKS_PER_SEC, (double)(tec - toc) / CLOCKS_PER_SEC);
+    //tec = clock();
+    display(numbers,variable_len);
+    display(nombres,variable_len);
+    //printf("%d - sort: %f seconds\t bsort: %f\n", variable_len, (double)(toc - tic) / CLOCKS_PER_SEC, (double)(tec - toc) / CLOCKS_PER_SEC);
     }
     return(0);
 
