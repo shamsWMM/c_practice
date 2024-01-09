@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <time.h>
 // practicing recursion in sort
 
 void sort(int *nums, int len);
