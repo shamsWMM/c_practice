@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 // experimenting with coding a recursive search
-// we will use stdlib's quick sort to sort the array prior to the search
+// use stdlib's quick sort to sort the array prior to the search
 #define LEN 20 // length of the array
 
 void display(int *nums, int len);
