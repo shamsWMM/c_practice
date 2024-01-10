@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void map_ints(void (*fun)(int *ptr), int *arr, int len);
+void map_ints(int (*fun)(int i), int *arr, int len);
 void filter_ints(int (*fun)(int i), int *arr, int len);
-void square(int *i);
+int foldr_ints(int (*fun)(int i, int j), int b, int *arr, int len);
+int multiply(int i, int j);
+int square(int i);
 int is_even(int i);
 void display(int *nums, int len);
 
@@ -11,6 +13,8 @@ int main(int argc, char **argv)
 {
     int len = 4, ints[] = {1, 2, 3, 4};
     display(ints, 4);
+
+    printf("foldr result: %i \n", foldr_ints(multiply, 1, ints, len));
 
     map_ints(square, ints, len);
     display(ints, 4);
@@ -21,11 +25,11 @@ int main(int argc, char **argv)
     return 0;
 }
 // map
-void map_ints(void (*fun)(int *ptr), int *arr, int len)
+void map_ints(int (*fun)(int i), int *arr, int len)
 {
     while (len)
     {
-        fun(arr);
+        *arr = fun(*arr);
         arr++;
         len--;
     }
@@ -37,13 +41,24 @@ void filter_ints(int (*fun)(int i), int *arr, int len)
     {
         if (!fun(*arr))
             *arr = 0;
-        filter_ints(fun, ++arr, --len);
+        filter_ints(fun, arr + 1, len - 1);
     }
 }
-
-void square(int *i)
+int foldr_ints(int (*fun)(int i, int j), int b, int *arr, int len)
 {
-    *i *= *i;
+    if (len)
+    {
+        return fun(*arr, foldr_ints(fun, b, arr + 1, len - 1));
+    }
+    return b;
+}
+int multiply(int i, int j)
+{
+    return (i * j);
+}
+int square(int i)
+{
+    return i *= i;
 }
 int is_even(int i)
 {
