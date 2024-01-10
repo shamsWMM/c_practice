@@ -1,9 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// recursion is used instead of iteration solely for more practice on recursion.
+// iterative approach would work better that the recursive approach used here.
+
 void map_ints(int (*fun)(int i), int *arr, int len);
 void filter_ints(int (*fun)(int i), int *arr, int len);
 int foldr_ints(int (*fun)(int i, int j), int b, int *arr, int len);
+int andmap_ints(int (*fun)(int i), int *arr, int len);
+
 int multiply(int i, int j);
 int square(int i);
 int is_even(int i);
@@ -14,7 +19,11 @@ int main(int argc, char **argv)
     int len = 4, ints[] = {1, 2, 3, 4};
     display(ints, 4);
 
-    printf("foldr result: %i \n", foldr_ints(multiply, 1, ints, len));
+    printf("foldr ints: %i \n", foldr_ints(multiply, 1, ints, len));
+
+    int evens[] = {2, 4, 6, 4};
+    printf("andmap ints: %i \n", andmap_ints(is_even, ints, len));
+    printf("andmap evens: %i \n", andmap_ints(is_even, evens, len));
 
     map_ints(square, ints, len);
     display(ints, 4);
@@ -44,6 +53,7 @@ void filter_ints(int (*fun)(int i), int *arr, int len)
         filter_ints(fun, arr + 1, len - 1);
     }
 }
+// foldr
 int foldr_ints(int (*fun)(int i, int j), int b, int *arr, int len)
 {
     if (len)
@@ -52,6 +62,14 @@ int foldr_ints(int (*fun)(int i, int j), int b, int *arr, int len)
     }
     return b;
 }
+// andmap
+int andmap_ints(int (*fun)(int i), int *arr, int len)
+{
+    if (len)
+        return (fun(*arr) && andmap_ints(fun, arr + 1, len - 1));
+    return 1;
+}
+
 int multiply(int i, int j)
 {
     return (i * j);
