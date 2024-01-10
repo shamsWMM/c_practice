@@ -2,7 +2,7 @@
 #include <stdlib.h>
 // int arrays are used here to simplify the work here.
 // recursion is used instead of iteration solely for more practice on recursion.
-// iterative approach would work better here than the recursive approach used.
+// iterative approach is preferable to the recursive approach used.
 
 void map_ints(int (*fun)(int i), int *arr, int len);
 void filter_ints(int (*fun)(int i), int *arr, int len);
