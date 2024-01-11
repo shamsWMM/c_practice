@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-// int arrays are used here to simplify the work here.
+// int arrays are used here to simplify the work.
 // recursion is used instead of iteration solely for more practice on recursion.
 // iterative approach is preferable to the recursive approach used.
 
@@ -59,6 +59,17 @@ int foldr_ints(int (*fun)(int i, int j), int b, int *arr, int len)
     if (len)
     {
         return fun(*arr, foldr_ints(fun, b, arr + 1, len - 1));
+    }
+    return b;
+}
+// consider associativity of fun when selecting fold variant
+// this fold is is optimized for performance
+int fold_ints_variant(int (*fun)(int i, int j), int b, int *arr, int len)
+{
+    if (len)
+    {
+
+        return foldr_ints(fun, fun(*arr, b), arr + 1, len - 1);
     }
     return b;
 }
